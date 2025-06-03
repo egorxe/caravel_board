@@ -36,7 +36,7 @@ SECTIONS
 
 	.rodata :
 	{
-		. = ALIGN(8);
+		. = ALIGN(256);
 		_frodata = .;
 		*(.rodata .rodata.* .gnu.linkonce.r.*)
 		*(.rodata1)
@@ -46,7 +46,7 @@ SECTIONS
 
 	.data :
 	{
-		. = ALIGN(8);
+		. = ALIGN(256);
 		_fdata = .;
 		*(.data .data.* .gnu.linkonce.d.*)
 		*(.data1)
@@ -58,7 +58,7 @@ SECTIONS
 
 	.bss :
 	{
-		. = ALIGN(8);
+		. = ALIGN(256);
 		_fbss = .;
 		*(.dynsbss)
 		*(.sbss .sbss.* .gnu.linkonce.sb.*)
