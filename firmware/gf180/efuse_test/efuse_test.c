@@ -15,6 +15,7 @@
 
 // User wishbone access helpers
 #define write_user_reg(off, val) {(*(volatile uint32_t*)(USER_WB_ADDR + (off))) = (val);}
+#define write_user_byte(off, val) {(*(volatile uint8_t*)(USER_WB_ADDR + (off))) = (val);}
 #define read_user_reg(off) (*(volatile uint32_t*)(USER_WB_ADDR + (off)))
 #define read_user_byte(off) (*(volatile uint8_t*)(USER_WB_ADDR + (off)))
 
@@ -147,7 +148,7 @@ void delay(const int d)
 void read_efuse(int size)
 {
     print("Reading efuse, printing non default values...\n");
-    for (int i = 0; i < size; i+=1) 
+    for (int i = 0; i < size; i+=4) 
     {
         // read eFuse via memory mapped Wishbone addresses
         uint8_t data = read_user_byte(OFF_EFUSE_ADDR + i);
@@ -165,10 +166,10 @@ void read_efuse(int size)
 void write_efuse(int size)
 {
     print("Writing counter to efuse...\n");
-    for (int i = 0; i < size; i+=1) 
+    for (int i = 0; i < size; i+=4) 
     {
         // write eFuse via memory mapped Wishbone addresses
-        write_user_reg(OFF_EFUSE_ADDR + i, i & 0xFF);
+        write_user_reg(OFF_EFUSE_ADDR + i, (i>>2) & 0xFF);
     }
     print("Efuse write finished\n");
 }
